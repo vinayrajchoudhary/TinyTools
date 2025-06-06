@@ -1,3 +1,4 @@
+
 # AutoExtractor v1.0
 
 **Author:** Vinay Raj Choudhary
@@ -50,17 +51,24 @@ A brief informational balloon tip appears when the program starts, displaying ve
 * Ensure WinRAR is installed to enable `.rar` extraction; otherwise `.rar` files will be skipped.
 * The program does not generate logs in the current version.
 * Balloon tip notification briefly displays on startup and then disappears.
-* If you want to run it on another machine, include WinRAR or adjust the script path accordingly.
+* If running on another machine, ensure WinRAR is installed or update the script path accordingly.
+* `.gz` files are decompressed in place without a new folder suffix.
+* Nested archives inside extracted folders are automatically processed recursively.
 
 ---
 
-## Credits
+## Troubleshooting
 
-Developed by **Vinay Raj Choudhary**
-Version 1.0 — June 5, 2025
+* **Script execution policy blocked?** Run PowerShell as admin and use:
+
+  ```powershell
+  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+  ```
+* **WinRAR not found?** Install WinRAR or change the `$WinRAR` path variable in the script to the correct location.
+* **Unsupported files are skipped** silently (e.g., `.7z`, `.tar` not supported).
+* Extraction folders will appear in the same directory as the archives; check there if extraction seems silent.
 
 ---
-
 
 ## Building the EXE from the PowerShell Script
 
@@ -71,24 +79,42 @@ To create a standalone executable from the PowerShell script, you can use the [`
 1. Download the latest **PS2EXE** release from the official GitHub repo:
    [https://github.com/MScholtes/PS2EXE](https://github.com/MScholtes/PS2EXE)
 
-2. Extract the downloaded ZIP file. Inside, locate the `ps2exe.ps1` script, typically under `Module` folder.
+2. Extract the downloaded ZIP file. Locate the `ps2exe.ps1` script (usually under the `Module` folder).
 
-3. Open PowerShell **with execution policy unrestricted** (if needed):
+3. Open PowerShell with the execution policy temporarily bypassed:
 
    ```powershell
    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
    ```
 
-4. Run the following command to convert the script to an EXE (replace paths accordingly):
+4. Run the conversion command (adjust paths accordingly):
 
    ```powershell
    powershell.exe -File "C:\path\to\ps2exe.ps1" -inputFile "AutoExtractor.ps1" -outputFile "AutoExtractor.exe" -noConsole -icon "app.ico"
    ```
 
-   * `-noConsole` makes the EXE run without showing a console window.
-   * `-icon` is optional, for custom icon.
+   * `-noConsole` hides the PowerShell console window during execution.
+   * `-icon` is optional, specify a custom icon if desired.
 
-5. Your `AutoExtractor.exe` will be generated and ready to run.
+5. The generated `AutoExtractor.exe` can be run directly on compatible Windows machines.
+
+---
+
+## Future Enhancements / Known Limitations
+
+* Support for more archive formats like `.7z` or `.tar`.
+* Optional logging to file for detailed diagnostics.
+* Silent/background operation mode (currently requires user interaction).
+* Handling password-protected archives.
+* Multiple instance detection to prevent concurrent runs.
+* User-configurable WinRAR path via UI or config file.
+
+---
+
+## Credits
+
+Developed by **Vinay Raj Choudhary**
+Version 1.0 — June 5, 2025
 
 ---
 
