@@ -120,5 +120,8 @@ if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
                 Remove-Item -Path $folder -Recurse -Force -ErrorAction SilentlyContinue
             } catch {}
         }
+	# Step 5: Open the output folder
+	Start-Process -FilePath $pdfOutputFolder
+
     }
 }
